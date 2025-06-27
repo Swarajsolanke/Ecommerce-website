@@ -1,0 +1,109 @@
+{% extends 'store/base.html' %}
+{% block title %}ShopCart - Products{% endblock %}
+{%load static%}
+{% block content %}
+<div class="products-page">
+    <aside class="categories-sidebar">
+        <h3>Categories</h3>
+        <ul>
+            <li{% if not selected_category %} class="active"{% endif %}><a href="/products/">All</a></li>
+            {% for category in categories %}
+            <li{% if selected_category and selected_category.id == category.id %} class="active"{% endif %}>
+                <a href="/products/?category={{ category.id }}">{{ category.name }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </aside>
+    <section class="products-section">
+        {% if query %}
+            <div class="search-results-header">
+                <h2>Search Results for "{{ query }}"</h2>
+                <p>Found {{ products.count }} product{{ products.count|pluralize }}</p>
+                <a href="/products/" class="clear-search">Clear Search</a>
+            </div>
+            {% if products %}
+                <div class="products-grid">
+                    {% for product in products %}
+                    <div class="product-card">
+                        <img src="{% if product.image %}{% static 'images/' %}{{ product.image }}{% else %}{% static 'images/realme phone.jpg' %}{% endif %}" alt="{{ product.name }}">
+                        <h3>{{ product.name }}</h3>
+                        <p class="product-description">{{ product.description|truncatewords:10 }}</p>
+                        <span class="price-badge">Rs.{{ product.price }}</span>
+                        {% if user.is_authenticated %}
+                            <form method="post" action="{% if product in wishlist_products %}{% url 'remove_from_wishlist' %}{% else %}{% url 'add_to_wishlist' %}{% endif %}" style="display:inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="product_id" value="{{ product.id }}">
+                                <button type="submit" class="wishlist-btn" title="{% if product in wishlist_products %}Remove from Wishlist{% else %}Add to Wishlist{% endif %}">
+                                    <i class="fa{% if product in wishlist_products %}s{% else %}r{% endif %} fa-heart"></i>
+                                </button>
+                            </form>
+                        {% endif %}
+                        <a href="{% url 'add_to_cart' %}?product_id={{ product.id }}" class="btn">Add to Cart</a>
+                        <a href="{% url 'order_product' %}?product_id={{ product.id }}" class="btn btn-order">Order Now</a>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="no-results">
+                    <i class="fa fa-search"></i>
+                    <h3>No products found</h3>
+                    <p>Try searching with different keywords or browse our categories.</p>
+                    <a href="/products/" class="btn btn-primary">Browse All Products</a>
+                </div>
+            {% endif %}
+        {% elif selected_category %}
+            <h2>{{ selected_category.name }}</h2>
+            <div class="products-grid">
+                {% for product in products %}
+                <div class="product-card">
+                    <img src="{% if product.image %}{% static 'images/' %}{{ product.image }}{% else %}{% static 'images/realme phone.jpg' %}{% endif %}" alt="{{ product.name }}">
+                    <p class="product-description">{{ product.description|truncatewords:10 }}</p>
+                    <span class="price-badge">Rs.{{ product.price }}</span>
+                    {% if user.is_authenticated %}
+                        <form method="post" action="{% if product in wishlist_products %}{% url 'remove_from_wishlist' %}{% else %}{% url 'add_to_wishlist' %}{% endif %}" style="display:inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="product_id" value="{{ product.id }}">
+                            <button type="submit" class="wishlist-btn" title="{% if product in wishlist_products %}Remove from Wishlist{% else %}Add to Wishlist{% endif %}">
+                                <i class="fa{% if product in wishlist_products %}s{% else %}r{% endif %} fa-heart"></i>
+                            </button>
+                        </form>
+                    {% endif %}
+                    <a href="{% url 'add_to_cart' %}?product_id={{ product.id }}" class="btn">Add to Cart</a>
+                    <a href="{% url 'order_product' %}?product_id={{ product.id }}" class="btn btn-order">Order Now</a>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <h2>All Products</h2>
+            {% for category in categories %}
+                <div class="category-section">
+                    <h3>{{ category.name }}</h3>
+                    <div class="products-grid">
+                        {% for product in products %}
+                            {% if product.category and product.category.id == category.id %}
+                            <div class="product-card">
+                                <img src="{% if product.image %}{% static 'images/' %}{{ product.image }}{% else %}{% static 'images/realme phone.jpg' %}{% endif %}" alt="{{ product.name }}">
+                                <h3>{{ product.name }}</h3>
+                                <p class="product-description">{{ product.description|truncatewords:10 }}</p>
+                                <span class="price-badge">Rs.{{ product.price }}</span>
+                                {% if user.is_authenticated %}
+                                    <form method="post" action="{% if product in wishlist_products %}{% url 'remove_from_wishlist' %}{% else %}{% url 'add_to_wishlist' %}{% endif %}" style="display:inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                                        <button type="submit" class="wishlist-btn" title="{% if product in wishlist_products %}Remove from Wishlist{% else %}Add to Wishlist{% endif %}">
+                                            <i class="fa{% if product in wishlist_products %}s{% else %}r{% endif %} fa-heart"></i>
+                                        </button>
+                                    </form>
+                                {% endif %}
+                                <a href="{% url 'add_to_cart' %}?product_id={{ product.id }}" class="btn">Add to Cart</a>
+                                <a href="{% url 'order_product' %}?product_id={{ product.id }}" class="btn btn-order">Order Now</a>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </section>
+</div>
+{% endblock %} 

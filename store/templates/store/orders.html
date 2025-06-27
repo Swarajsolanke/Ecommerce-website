@@ -1,0 +1,16 @@
+{% extends 'store/base.html' %}
+{% block title %}My Orders - ShopEasy{% endblock %}
+{% block content %}
+<h2>My Orders</h2>
+{% if orders and orders|length > 0 %}
+    <ul class="orders-list">
+        {% for order in orders %}
+        <li>
+            <strong>{{ order.name }}</strong> x{{ order.quantity|default:1 }} - Rs.{{ order.price }}
+        </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>You have not ordered any products yet.</p>
+{% endif %}
+{% endblock %} 

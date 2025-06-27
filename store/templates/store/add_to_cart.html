@@ -1,0 +1,24 @@
+{% extends 'store/base.html' %}
+{% block title %}Added to Cart - ShopEasy{% endblock %}
+{% block content %}
+<div class="cart-confirmation">
+    {% if ordered %}
+        <h2>✅ {{ product.name }} Ordered Successfully!</h2>
+        <img src="{% if product.image %}{{ product.image.url }}{% else %}https://via.placeholder.com/200{% endif %}" alt="{{ product.name }}" style="width:120px; border-radius:8px; margin:1rem auto; display:block;">
+        <p>Price: ${{ product.price }}</p>
+        <div class="cart-actions">
+            <a href="/orders/" class="btn btn-order">View Orders</a>
+            <a href="/products/" class="btn">Continue Shopping</a>
+        </div>
+    {% else %}
+        <h2>🎉 {{ product.name }} Added to Cart!</h2>
+        <img src="{% if product.image %}{{ product.image.url }}{% else %}https://via.placeholder.com/200{% endif %}" alt="{{ product.name }}" style="width:120px; border-radius:8px; margin:1rem auto; display:block;">
+        <p>Price: ${{ product.price }}</p>
+        <p>You can buy it anytime. Ready to checkout or keep shopping?</p>
+        <div class="cart-actions">
+            <a href="/cart/" class="btn">View Cart</a>
+            <a href="/products/" class="btn">Continue Shopping</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %} 

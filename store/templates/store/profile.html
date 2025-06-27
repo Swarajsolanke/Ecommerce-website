@@ -1,0 +1,218 @@
+{% extends 'store/base.html' %}
+{% block title %}My Profile - ShopCart{% endblock %}
+{% block content %}
+<div class="profile-container">
+    <div class="profile-header">
+        <div class="profile-avatar">
+            <i class="fa fa-user-circle"></i>
+        </div>
+        <div class="profile-info">
+            <h1>{{ user.username }}</h1>
+            
+        </div>
+    </div>
+    
+    <div class="profile-stats">
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fa fa-shopping-cart"></i>
+            </div>
+            <div class="stat-content">
+                <h3>Cart Items</h3>
+                <p class="stat-number">0</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fa fa-heart"></i>
+            </div>
+            <div class="stat-content">
+                <h3>Wishlist</h3>
+                <p class="stat-number">{{ wishlist_count|default:"0" }}</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fa fa-box"></i>
+            </div>
+            <div class="stat-content">
+                <h3>Orders</h3>
+                <p class="stat-number">0</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-actions">
+        <div class="action-card">
+            <h3><i class="fa fa-edit"></i> Account Settings</h3>
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="showEditModal()">
+                    <i class="fa fa-user-edit"></i> Edit Profile
+                </button>
+                <button class="btn btn-secondary" onclick="showChangePasswordModal()">
+                    <i class="fa fa-key"></i> Change Password
+                </button>
+                <button class="btn btn-warning" onclick="showResetPasswordModal()">
+                    <i class="fa fa-unlock-alt"></i> Reset Password
+                </button>
+            </div>
+        </div>
+
+        <div class="action-card">
+            <h3><i class="fa fa-cog"></i> Quick Actions</h3>
+            <div class="action-buttons">
+                <a href="{% url 'orders' %}" class="btn btn-info">
+                    <i class="fa fa-list"></i> View Orders
+                </a>
+                <a href="{% url 'wishlist' %}" class="btn btn-success">
+                    <i class="fa fa-heart"></i> My Wishlist
+                </a>
+                <a href="{% url 'cart' %}" class="btn btn-primary">
+                    <i class="fa fa-shopping-cart"></i> View Cart
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fa fa-user-edit"></i> Edit Profile</h2>
+                <span class="close" onclick="closeModal('editModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form class="edit-form" method="post" action="{% url 'profile' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="edit_profile">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" value="{{ user.username }}" readonly>
+                        <small>Username cannot be changed</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" value="{{ user.email|default:'' }}" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label for="first_name">First Name</label>
+                        <input type="text" id="first_name" name="first_name" value="{{ user.first_name|default:'' }}" placeholder="Enter your first name">
+                    </div>
+                    <div class="form-group">
+                        <label for="last_name">Last Name</label>
+                        <input type="text" id="last_name" name="last_name" value="{{ user.last_name|default:'' }}" placeholder="Enter your last name">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal('editModal')">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Change Password Modal -->
+    <div id="changePasswordModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fa fa-key"></i> Change Password</h2>
+                <span class="close" onclick="closeModal('changePasswordModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form class="password-form" method="post" action="{% url 'profile' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="change_password">
+                    <div class="form-group">
+                        <label for="current_password">Current Password</label>
+                        <input type="password" id="current_password" name="current_password" required placeholder="Enter your current password">
+                    </div>
+                    <div class="form-group">
+                        <label for="new_password1">New Password</label>
+                        <input type="password" id="new_password1" name="new_password1" required placeholder="Enter new password">
+                        <small>Password must be at least 8 characters long</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="new_password2">Confirm New Password</label>
+                        <input type="password" id="new_password2" name="new_password2" required placeholder="Confirm new password">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal('changePasswordModal')">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Change Password</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reset Password Modal -->
+    <div id="resetPasswordModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fa fa-unlock-alt"></i> Reset Password</h2>
+                <span class="close" onclick="closeModal('resetPasswordModal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form class="reset-form" method="post" action="{% url 'profile' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="reset_password">
+                    <div class="form-group">
+                        <label for="reset_email">Email Address</label>
+                        <input type="email" id="reset_email" name="reset_email" value="{{ user.email|default:'' }}" required placeholder="Enter your email address">
+                        <small>We'll send you a link to reset your password</small>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal('resetPasswordModal')">Cancel</button>
+                        <button type="submit" class="btn btn-warning">Send Reset Link</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function showEditModal() {
+    document.getElementById('editModal').style.display = 'block';
+}
+
+function showChangePasswordModal() {
+    document.getElementById('changePasswordModal').style.display = 'block';
+}
+
+function showResetPasswordModal() {
+    document.getElementById('resetPasswordModal').style.display = 'block';
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    var modals = document.querySelectorAll('.modal');
+    modals.forEach(function(modal) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    });
+}
+
+// Form validation for password change
+document.querySelector('.password-form').addEventListener('submit', function(e) {
+    var password1 = document.getElementById('new_password1').value;
+    var password2 = document.getElementById('new_password2').value;
+    
+    if (password1 !== password2) {
+        e.preventDefault();
+        alert('New passwords do not match!');
+        return false;
+    }
+    
+    if (password1.length < 8) {
+        e.preventDefault();
+        alert('Password must be at least 8 characters long!');
+        return false;
+    }
+});
+</script>
+{% endblock %} 

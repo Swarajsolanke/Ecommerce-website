@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    {%load static%}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ShopEasy{% endblock %}</title>
+    <link rel="stylesheet" href="/static/store/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-left">
+            <a href="/" class="logo"><i class="fa fa-shopping-bag"></i> ShopCart</a>
+        </div>
+        <form class="search-bar" method="get" action="/products/">
+            <input type="text" name="q" placeholder="Search for products, brands and more..." value="{{ request.GET.q|default:'' }}">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+        <nav class="header-nav">
+            <a href="/">Home</a>
+            <a href="/products/">Products</a>
+            <a href="/cart/"><i class="fa fa-shopping-cart"></i> Cart</a>
+            <a href="/checkout/">Checkout</a>
+        </nav>
+        <div class="header-user">
+            {% if request.user.is_authenticated %}
+            <div class="user-dropdown">
+                <button class="user-btn"><i class="fa fa-user-circle"></i> {{ request.user.username }} <i class="fa fa-caret-down"></i></button>
+                <div class="user-dropdown-content">
+                    <a href="{% url 'profile' %}"><i class="fa fa-user"></i> Profile</a>
+                    <a href="{% url 'orders' %}"><i class="fa fa-box"></i> Orders</a>
+                    <a href="{% url 'wishlist' %}"><i class="fa fa-heart"></i> Wishlist{% if request.user.is_authenticated and wishlist_count is not None %} ({{ wishlist_count }}){% endif %}</a>
+                    <a href="#"><i class="fa fa-bell"></i> Notifications</a>
+                    <a href="/signout/"><i class="fa fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+            {% else %}
+            <a href="/signup/" class="btn-auth">Sign Up</a>
+            <a href="/signin/" class="btn-auth">Sign In</a>
+            {% endif %}
+        </div>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2025 Shopcart. All rights reserved.</p>
+    </footer>
+    <script>
+    // Dropdown logic
+    document.addEventListener('DOMContentLoaded', function() {
+        var userBtn = document.querySelector('.user-btn');
+        var dropdown = document.querySelector('.user-dropdown-content');
+        if(userBtn && dropdown) {
+            userBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                dropdown.classList.toggle('show');
+                dropdown.style.zIndex = 2000;
+            });
+            document.addEventListener('click', function(e) {
+                if (!userBtn.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.classList.remove('show');
+                }
+            });
+        }
+    });
+    </script>
+</body>
+</html> 

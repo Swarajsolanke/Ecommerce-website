@@ -1,0 +1,28 @@
+{% extends 'store/base.html' %}
+{%load static%}
+{% block title %}My Wishlist - ShopEasy{% endblock %}
+{% block content %}
+<h2>My Wishlist ({{ count }})</h2>
+{% if products %}
+<div class="products-grid">
+    {% for product in products %}
+    <div class="product-card">
+        <img src="{% if product.image %}{% static 'images/' %}{{ product.image }}{% else %}{% static 'images/realme phone.jpg' %}{% endif %}" alt="{{ product.name }}">
+        <h3>{{ product.name }}</h3>
+        <span class="price-badge">Rs.{{ product.price }}</span>
+        <form method="post" action="{% url 'remove_from_wishlist' %}" style="display:inline;">
+            {% csrf_token %}
+            <input type="hidden" name="product_id" value="{{ product.id }}">
+            <button type="submit" class="wishlist-btn" title="Remove from Wishlist">
+                <i class="fas fa-heart"></i>
+            </button>
+        </form>
+        <a href="{% url 'add_to_cart' %}?product_id={{ product.id }}" class="btn">Add to Cart</a>
+        <a href="{% url 'order_product' %}?product_id={{ product.id }}" class="btn btn-order">Order Now</a>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>Your wishlist is empty.</p>
+{% endif %}
+{% endblock %} 

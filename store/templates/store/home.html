@@ -1,0 +1,25 @@
+{% extends 'store/base.html' %}
+{%load static%}
+{% block title %}ShopEasy - Home{% endblock %}
+{% block content %}
+<section class="hero">
+    <h2>Welcome to ShopCart!</h2>
+    <p>Your one-stop shop for the best products online.</p><br>
+    <a href="/products/" class="btn">Shop Now</a>
+</section>
+<h2 style="text-align:center; margin-top:2rem;">Featured Products</h2>
+<div class="products-grid">
+    {% for product in featured_products %}
+    <div class="product-card">
+        <img src="{% if product.image %}{% static 'images/' %}{{ product.image }}{% else %}{% static 'images/realme phone.jpg' %}{% endif %}" alt="{{ product.name }}">
+       
+        <h3>{{ product.name }}</h3>
+        <span class="price-badge">Rs.{{ product.price }}</span>
+       
+            <a href="{% url 'add_to_cart' %}?product_id={{ product.id }}" class="btn">Add to Cart</a>
+   
+           
+    </div>
+    {% endfor %}
+</div>
+{% endblock %} 

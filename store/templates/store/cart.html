@@ -1,0 +1,34 @@
+{% extends 'store/base.html' %}
+{% load cart_extras %}
+{% block title %}ShopEasy - Cart{% endblock %}
+{% block content %}
+<h2>Your Cart</h2>
+{% if cart_items %}
+<table class="cart-table">
+    <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Total</th>
+    </tr>
+    {% for item in cart_items %}
+    <tr>
+        <td>{{ item.product.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>Rs.{{ item.product.price }}</td>
+        <td>Rs.{{ item.product.price|mul:item.quantity|floatformat:2 }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<div class="cart-summary">
+    <p><strong>Total: ${{ total|floatformat:2 }}</strong></p>
+    <a href="/checkout/" class="btn">Proceed to Checkout</a>
+    <form method="post" action="{% url 'place_order' %}" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn" style="margin-left:1rem;">Place Order</button>
+    </form>
+</div>
+{% else %}
+<p>Your cart is empty.</p>
+{% endif %}
+{% endblock %} 
