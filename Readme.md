@@ -27,47 +27,21 @@ Welcome to **ShopCart** – a modern, full-featured ecommerce web application bu
 
 ---
 
-## 🖼️ Working of Website:
-1. Home page : here user can see the feature product he want to buy
-![homepage](home.png)
+## 🖼️ Screenshots
 
-2.Signup and Sigin page:
-![alt text](signup.png)
-![alt text](signin.png)
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/placeholder/homepage.png" width="700" alt="Homepage Screenshot"/>
+  <br/>
+  <img src="https://user-images.githubusercontent.com/placeholder/products.png" width="700" alt="Products Screenshot"/>
+  <br/>
+  <img src="https://user-images.githubusercontent.com/placeholder/cart.png" width="700" alt="Cart Screenshot"/>
+</p>
 
-3. product page:
-![alt text](electronic.png)
-![alt text](clothing.png)
-![alt text](novel.png)
+> _Replace the above image URLs with your actual screenshots for a more personalized README!_
 
+---
 
-4. cart page:
-![alt text](cart.png)
-![alt text](add_to_cart.png)
-
-5.whislist :
-![alt text](whislist.png)
-6.checkout page:
-![alt text](checkout.png)
-![alt text](order.png)
-
-7.order page:
-![alt text](image-2.png)
-
-8.profile section:
-![alt text](profile.png)
-
-9.Edit profile:
-![alt text](edit.png)
-
-10.change password:
-![alt text](changepass.png)
-
-11.reset password:
-![alt text](image-1.png)
-
-
-## Project Structure
+## 🏗️ Project Structure
 
 ```text
 ecommerce/
@@ -89,7 +63,7 @@ ecommerce/
 
 ---
 
-## Quick Start
+## ⚡ Quick Start
 
 1. **Clone the Repository**
     ```bash
