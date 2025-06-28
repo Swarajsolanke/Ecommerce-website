@@ -1,5 +1,5 @@
 {% extends 'store/base.html' %}
-{% block title %}ShopEasy - Checkout{% endblock %}
+{% block title %}ShopCart - Checkout{% endblock %}
 {% block content %}
 <h2>Checkout</h2>
 {% if messages %}
@@ -26,10 +26,10 @@
     <h3>Order Summary</h3>
     <ul>
       {% for item in order_summary %}
-        <li>{{ item.name }} x{{ item.quantity }} - ${{ item.subtotal }}</li>
+        <li>{{ item.name }} x{{ item.quantity }} - Rs.{{ item.subtotal }}</li>
       {% endfor %}
     </ul>
-    <p><strong>Total: ${{ total }}</strong></p>
+    <p><strong>Total: Rs.{{ total }}</strong></p>
     <button type="submit" class="btn">Place Order</button>
 </form>
 {% endif %}
