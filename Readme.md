@@ -1,4 +1,4 @@
-# 🛒 Django Ecommerce Website
+# 🛒 Ecommerce Website for Easy Purchase Product
 
 ![Django](https://img.shields.io/badge/Django-5.0-green?logo=django)
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
@@ -28,40 +28,48 @@ Welcome to **ShopCart** – a modern, full-featured ecommerce web application bu
 ---
 
 ## 🖼️ Working of Website:
-1. Home page : here user can see the feature product he want to buy
+# 1. Home page : 
+
 ![homepage](home.png)
 
-2.Signup and Sigin page:
-![alt text](signup.png)
-![alt text](signin.png)
-3. product page:
+# 2.Signup and Sigin:
+ 1.Sigupage:
+ 
+  ![alt text](signup.png)
+  
+ 2.sigin:
+ 
+ ![alt text](signin.png)
+
+# 3. product page:
+
 ![alt text](electronic.png)
 ![alt text](clothing.png)
 ![alt text](novel.png)
-
-
-4. cart page:
+# 4. cart page:
 ![alt text](cart.png)
 ![alt text](add_to_cart.png)
-5.whislist :
+
+# 5.whislist :
 ![alt text](whislist.png)
-6.checkout page:
+
+# 6.checkout page:
 ![alt text](checkout.png)
 ![alt text](order.png)
 
-7.order page:
+# 7.order page:
 ![alt text](image-2.png)
 
-8.profile section:
+# 8.profile section:
 ![alt text](profile.png)
 
-9.Edit profile:
+# 9.Edit profile:
 ![alt text](edit.png)
 
-10.change password:
+# 10.change password:
 ![alt text](changepass.png)
 
-11.reset password:
+# 11.Reset password:
 ![alt text](image-1.png)
 
 
@@ -118,7 +126,6 @@ ecommerce/
     ```bash
     python manage.py runserver
     ```
-7. **Visit** [http://127.0.0.1:8000/](http://127.0.0.1:8000/) in your browser.
 
 ---
 
@@ -153,7 +160,7 @@ ecommerce/
 
 This project is for educational/demo purposes.
 
----
+-----
 
 <p align="center">
   <b>Happy Shopping! 🛒</b>
