@@ -154,12 +154,6 @@ ecommerce/
 - UI inspired by modern ecommerce platforms
 - Icons by [Icons8](https://icons8.com/)
 
----
-
-## 📄 License
-
-This project is for educational/demo purposes.
-
 -----
 
 <p align="center">
