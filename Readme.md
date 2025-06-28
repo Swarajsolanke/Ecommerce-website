@@ -99,7 +99,7 @@ ecommerce/
 
 1. **Clone the Repository**
     ```bash
-    git clone <your-repo-url>
+    git clone https://github.com/Swarajsolanke/ecommerce.git
     cd ecommerce
     ```
 2. **Create a Virtual Environment**
