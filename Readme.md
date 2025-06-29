@@ -129,6 +129,17 @@ ecommerce/
     ```
 
 ---
+# Dockerize the application:
+
+ **1.create the docker image using following command**
+  ```bash
+  docker build -t ecommerce .
+  ```
+ **2.run the dockerfile using the below commands**
+  ```bash
+  docker run -p 8000:8000 ecommerce
+  ```
+---
 
 ## 📝 Usage
 
